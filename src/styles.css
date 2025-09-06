@@ -1,4 +1,252 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* src/styles.css
+   Clean, responsive styles for Weather App
+   - Replace Tailwind usage with plain CSS
+   - Tone: dark, glassmorphism card, readable typography
+*/
+
+/* -------------------------
+   Theme variables
+   ------------------------- */
+:root{
+  --bg: #0f1724;            /* app background */
+  --panel: rgba(255,255,255,0.04);
+  --panel-2: rgba(255,255,255,0.03);
+  --accent: #4f46e5;        /* indigo-ish accent */
+  --accent-2: #06b6d4;      /* teal accent for highlights */
+  --muted: #9aa4b2;
+  --glass-border: rgba(255,255,255,0.06);
+  --card-shadow: 0 8px 30px rgba(2,6,23,0.6);
+  --radius-lg: 16px;
+  --radius-md: 10px;
+  --max-width: 900px;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+               Roboto, "Helvetica Neue", Arial;
+}
+
+/* -------------------------
+   Base / Layout
+   ------------------------- */
+*{box-sizing: border-box}
+html,body,#root{
+  height:100%;
+}
+body{
+  margin:0;
+  font-family:var(--font-sans);
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(79,70,229,0.08), transparent),
+              linear-gradient(180deg, var(--bg), #071023 120%);
+  color: #e6eef8;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.4;
+  padding:32px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* App wrapper */
+.app {
+  width:100%;
+  max-width:var(--max-width);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:28px;
+  padding:28px;
+}
+
+/* Title */
+.app-title {
+  font-size: clamp(20px, 4vw, 32px);
+  font-weight:700;
+  letter-spacing: -0.02em;
+  margin:0;
+  text-align:center;
+  text-shadow: 0 2px 18px rgba(79,70,229,0.12);
+}
+
+/* -------------------------
+   Search Bar
+   ------------------------- */
+.search-bar {
+  display:flex;
+  gap:10px;
+  width:100%;
+  max-width:640px;
+  align-items:center;
+  justify-content:center;
+}
+
+.input {
+  flex:1;
+  min-width:0;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid var(--glass-border);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  color:inherit;
+  font-size:16px;
+  outline:none;
+  transition: box-shadow .15s ease, transform .06s ease, border-color .12s ease;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset;
+}
+
+/* placeholder color */
+.input::placeholder{ color: var(--muted); }
+
+/* focus */
+.input:focus{
+  border-color: rgba(79,70,229,0.9);
+  box-shadow: 0 8px 30px rgba(79,70,229,0.08);
+  transform: translateY(-1px);
+}
+
+/* Button */
+.btn {
+  padding:10px 16px;
+  border-radius:12px;
+  border:0;
+  background: linear-gradient(180deg, var(--accent), #3730a3);
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  font-size:15px;
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  transition: transform .08s ease, box-shadow .12s ease, opacity .12s ease;
+  box-shadow: 0 6px 18px rgba(79,70,229,0.18);
+}
+.btn:active{ transform: translateY(1px) scale(.997); }
+.btn:hover{ opacity:.98; }
+
+/* -------------------------
+   Weather Card
+   ------------------------- */
+.weather-card {
+  width:100%;
+  max-width:640px;
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border-radius: var(--radius-lg);
+  padding:24px;
+  border:1px solid var(--glass-border);
+  box-shadow: var(--card-shadow);
+  display:flex;
+  gap:20px;
+  align-items:center;
+  justify-content:space-between;
+  overflow:hidden;
+}
+
+/* left: info column */
+.weather-main {
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-width:0;
+}
+.city {
+  font-size:20px;
+  font-weight:700;
+}
+.description {
+  color:var(--muted);
+  font-size:14px;
+  text-transform:capitalize;
+}
+
+/* temperature */
+.temp {
+  font-size:48px;
+  font-weight:700;
+  margin-top:6px;
+  letter-spacing:-0.02em;
+}
+
+/* right: meta column */
+.weather-meta {
+  text-align:right;
+  min-width:120px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:flex-end;
+}
+.meta-item {
+  font-size:14px;
+  color:var(--muted);
+}
+
+/* small info row (icons + text) */
+.info-row {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  font-size:14px;
+  color:var(--muted);
+}
+.info-row .dot {
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--accent-2);
+}
+
+/* subtle accent underline */
+.underline {
+  height:2px;
+  width:72px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius:4px;
+  margin-top:6px;
+}
+
+/* -------------------------
+   Empty / Error states
+   ------------------------- */
+.placeholder {
+  width:100%;
+  max-width:640px;
+  border-radius:12px;
+  padding:20px;
+  text-align:center;
+  color:var(--muted);
+  background: rgba(255,255,255,0.02);
+  border:1px dashed rgba(255,255,255,0.03);
+}
+
+/* -------------------------
+   Small screens responsive
+   ------------------------- */
+@media (max-width:720px){
+  .weather-card{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:14px;
+  }
+  .weather-meta{ text-align:left; align-items:flex-start; }
+  .app { padding:20px; gap:18px; }
+  .temp { font-size:40px; }
+}
+
+/* -------------------------
+   Micro UX: loader + fade
+   ------------------------- */
+@keyframes pulse {
+  0% { opacity:1; transform: scale(1); }
+  50% { opacity:0.55; transform: scale(.995); }
+  100% { opacity:1; transform: scale(1); }
+}
+.loader {
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  animation: pulse 1.2s infinite ease-in-out;
+  box-shadow: 0 8px 30px rgba(79,70,229,0.12);
+}
+
+/* small accessible focus outlines for keyboard users */
+.btn:focus, .input:focus { outline: 3px solid rgba(6,182,212,0.12); outline-offset:3px; }
 
